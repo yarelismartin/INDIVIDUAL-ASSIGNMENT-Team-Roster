@@ -20,6 +20,9 @@ export default function NavBar() {
             <Link passHref href="/">
               <Nav.Link>Members</Nav.Link>
             </Link>
+            <Link passHref href="/member/new">
+              <Nav.Link>Add a Member</Nav.Link>
+            </Link>
             <Form className="d-flex">
               <Form.Control
                 type="search"
