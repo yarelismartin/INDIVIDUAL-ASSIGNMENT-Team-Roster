@@ -6,6 +6,10 @@ import Link from 'next/link';
 import { deleteSingleMember } from '../api/memberData';
 
 export default function MemberCards({ memObj, onUpdate }) {
+  /* when del we need to:
+  1. make a confirmation message
+  2. call our del api and pass it the correct  argument
+  3. .then call the onUpdate function */
   const deleteMember = () => {
     if (window.confirm(`Are you sure you want to delete ${memObj.name}?`)) {
       deleteSingleMember(memObj.firebaseKey).then(onUpdate);
