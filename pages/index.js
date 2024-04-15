@@ -24,7 +24,7 @@ function Home() {
       }}
     >
       {members.map((member) => (
-        <MemberCards key={member.firebaseKey} memObj={member} />
+        <MemberCards key={member.firebaseKey} memObj={member} onUpdate={getAllMembers} />
       ))}
 
     </div>

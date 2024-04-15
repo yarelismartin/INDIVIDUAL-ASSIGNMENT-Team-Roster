@@ -3,8 +3,15 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import { deleteSingleMember } from '../api/memberData';
 
-export default function MemberCards({ memObj }) {
+export default function MemberCards({ memObj, onUpdate }) {
+  const deleteMember = () => {
+    if (window.confirm(`Are you sure you want to delete ${memObj.name}?`)) {
+      deleteSingleMember(memObj.firebaseKey).then(onUpdate);
+    }
+  };
+
   return (
     <div>
       <Card border="warning" style={{ width: '18rem' }}>
@@ -15,7 +22,7 @@ export default function MemberCards({ memObj }) {
           <Link href={`/member/edit/${memObj.firebaseKey}`} passHref>
             <Button style={{ backgroundColor: '#90a955', border: 'none' }}>✏️</Button>
           </Link>
-          <Button style={{ backgroundColor: '#ef5d60', border: 'none' }} className="m-2">
+          <Button style={{ backgroundColor: '#ef5d60', border: 'none' }} className="m-2" onClick={deleteMember}>
             🗑️
           </Button>
 
@@ -32,4 +39,5 @@ MemberCards.propTypes = {
     image: PropTypes.string,
     firebaseKey: PropTypes.string,
   }).isRequired,
+  onUpdate: PropTypes.func.isRequired,
 };
