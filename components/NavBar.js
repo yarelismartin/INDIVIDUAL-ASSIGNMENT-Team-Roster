@@ -39,3 +39,6 @@ export default function NavBar() {
     </Navbar>
   );
 }
+
+/*  the navbar has a  <Nav.Link> </Nav.Link> with a href that
+containes the route of the pg */
