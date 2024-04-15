@@ -11,7 +11,6 @@ export default function MemberCards({ memObj }) {
         <Card.Img variant="top" src={memObj.image} style={{ objectFit: 'cover', height: '200px' }} />
         <Card.Body>
           <Card.Title style={{ fontSize: 'inherit', fontWeight: 400 }}>Position: {memObj.position}</Card.Title>
-          <Button style={{ backgroundColor: '#f4a261', border: 'none' }} className="m-2">🔍</Button>
           <Button style={{ backgroundColor: '#90a955', border: 'none' }}>✏️</Button>
           <Button style={{ backgroundColor: '#ef5d60', border: 'none' }} className="m-2">
             🗑️
