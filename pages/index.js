@@ -2,32 +2,47 @@ import { useEffect, useState } from 'react';
 import MemberCards from '../components/MemberCards';
 import { getMembers } from '../api/memberData';
 import { useAuth } from '../utils/context/authContext';
+import Search from '../components/Search';
 
 function Home() {
   const [members, setMembers] = useState([]);
-
+  const [filteredMembers, setFilteredMembers] = useState([]);
   const { user } = useAuth();
 
   const getAllMembers = () => {
     getMembers(user.uid).then(setMembers);
+    setFilteredMembers(members);
   };
 
   useEffect(() => {
     getAllMembers();
-  });
+  }, []);
+
+  const filterItems = (query) => {
+    if (!query) {
+      // If query is empty, show all members
+      setFilteredMembers(members);
+    }
+    const filtered = members.filter((member) => member.name.toLowerCase().includes(query) || member.position.toLowerCase().includes(query));
+    setFilteredMembers(filtered);
+  };
 
   return (
-    <div
-      className="text-center d-flex flex-wrap justify-content-center align-content-center"
-      style={{
-        gap: '20px',
-      }}
-    >
-      {members.map((member) => (
-        <MemberCards key={member.firebaseKey} memObj={member} onUpdate={getAllMembers} />
-      ))}
+    <>
 
-    </div>
+      <div
+        className="text-center d-flex flex-wrap justify-content-center align-content-center"
+        style={{
+          gap: '20px',
+        }}
+      >
+        <Search onKeyUp={filterItems} />
+        {filteredMembers.map((member) => (
+          <MemberCards key={member.firebaseKey} memObj={member} onUpdate={getAllMembers} />
+        ))}
+
+      </div>
+    </>
   );
 }
 
