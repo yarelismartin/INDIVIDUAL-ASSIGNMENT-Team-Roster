@@ -5,9 +5,15 @@ import PropTypes from 'prop-types';
 
 export default function TeamCards({ teamObj }) {
   const router = useRouter();
+
   return (
     <div>
-      <Card.Img src={teamObj.logo} style={{ height: '200px', width: '200px' }} onClick={() => router.push(`/team/${teamObj.firebaseKey}`)} />
+      <Card.Img
+        src={teamObj.logo}
+        style={{ height: '150px', width: '150px', cursor: 'pointer' }}
+        onClick={() => router.push(`/team/${teamObj.firebaseKey}`)}
+        className="logo"
+      />
     </div>
   );
 }

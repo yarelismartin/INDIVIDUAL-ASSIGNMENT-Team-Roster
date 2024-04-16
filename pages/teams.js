@@ -13,13 +13,15 @@ export default function Teams() {
 
   useEffect(() => {
     getAllTeams();
-  });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div
       className="text-center d-flex flex-wrap justify-content-center align-content-center"
       style={{
-        gap: '20px',
+        gap: '40px',
+        marginTop: '40px',
       }}
     >
       {teams.map((team) => (
