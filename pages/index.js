@@ -26,6 +26,7 @@ function Home() {
 */
   useEffect(() => {
     getAllMembers();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /* passed to our search component onKeyUp prop so that we can filter through the target value */
