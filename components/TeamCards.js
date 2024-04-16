@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function Home() {
+export default function TeamCards() {
   return (
     <div>
-      <h1>welcome</h1>
+      <h1>Teams</h1>
     </div>
   );
 }

@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function Home() {
+export default function viewTeam() {
   return (
     <div>
-      <h1>welcome</h1>
+      view team roaster
     </div>
   );
 }
