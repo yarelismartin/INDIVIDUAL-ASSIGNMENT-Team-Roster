@@ -16,7 +16,6 @@ export default function ViewTeam() {
 
   useEffect(() => {
     getTeamDetails();
-    console.warn(firebaseKey);
     return () => {
       SetTeamDetails({});
     };

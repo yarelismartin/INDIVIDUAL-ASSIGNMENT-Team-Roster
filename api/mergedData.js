@@ -2,8 +2,9 @@ import { deleteSingleMember } from './memberData';
 import { deleteSingleTeam, getSingleTeam, getTeamMembers } from './teamData';
 
 const deleteTeamAndMembers = async (teamFirebasekey) => {
-  const TeamMembers = await getTeamMembers(teamFirebasekey);
-  const deleteMembersPromise = await TeamMembers.map((member) => deleteSingleMember(member.firebaseKey));
+  const teamMembers = await getTeamMembers(teamFirebasekey);
+  const deleteMembersPromise = await teamMembers.map((member) => deleteSingleMember(member.firebaseKey));
+  console.warn(teamMembers, deleteMembersPromise);
 
   await Promise.all(deleteMembersPromise).then(() => deleteSingleTeam(teamFirebasekey));
 };
@@ -15,12 +16,11 @@ const deleteTeamAndMembers = async (teamFirebasekey) => {
     }).catch((error) => reject(error));
 });
  */
-
 const viewTeamDetails = async (teamFirebasekey) => {
   const team = await getSingleTeam(teamFirebasekey);
-  const TeamMembers = await getTeamMembers(teamFirebasekey);
+  const teamMembers = await getTeamMembers(teamFirebasekey);
 
-  return { ...team, members: TeamMembers };
+  return { ...team, members: teamMembers };
 };
 
 export { deleteTeamAndMembers, viewTeamDetails };

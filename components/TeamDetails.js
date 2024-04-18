@@ -2,12 +2,13 @@ import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import deleteTeamAndMembers from '../api/mergedData';
+import { deleteTeamAndMembers } from '../api/mergedData';
 
 export default function TeamDetails({ teamObj, onUpdate }) {
   const deleteAllMembersAndTeam = () => {
     if (window.confirm(`If you delete ${teamObj.team_name} you will also delete all the players in this team. `)) {
       deleteTeamAndMembers(teamObj.firebaseKey).then(onUpdate);
+      console.warn(teamObj.firebaseKey);
     }
   };
   return (
