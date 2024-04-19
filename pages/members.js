@@ -9,21 +9,20 @@ function Members() {
   const [members, setMembers] = useState([]);
   // needed in order to display the search query
   const [filteredMembers, setFilteredMembers] = useState([]);
-  // needed to pull uid
   const { user } = useAuth();
 
-  const getAllMembers = () => {
-    // get all memb based on uid then call our setMembers to pass results
-    getMembers(user.uid).then((fetchedMembers) => {
-      setMembers(fetchedMembers);
-      // also need to set  filteredMembers to the fetched member in order to keep our data updated
-      setFilteredMembers(fetchedMembers);
-    });
+  // Function to fetch all members
+  const getAllMembers = async () => {
+    const fetchedMembers = await getMembers(user.uid);
+    // Set both all members and filtered members to the fetched members
+    setMembers(fetchedMembers);
+    setFilteredMembers(fetchedMembers);
   };
 
   // useEffect hook to fetch all members when the component mounts
-  /* useeffct runs after every render of the component, You can control when useEffect runs by providing a dependency array as the second argument. If the values in the dependency array change between renders, the effect will run again If the dependency array is empty, the effect runs only once after the initial render.
-*/
+  // Runs once after the initial render to fetch all members
+  // You can control when useEffect runs by providing a dependency array
+  // If the dependency array is empty, the effect runs only once after the initial render
   useEffect(() => {
     getAllMembers();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -38,7 +37,7 @@ function Members() {
       // we grab members because it has the full list of players we then filter based on name and position
       const filtered = members.filter((member) => member.name.toLowerCase().includes(query)
       || member.position.toLowerCase().includes(query));
-      /* we then call setFilterdMembers and pass it the resilt of the filter */
+      // Update filtered members with the filtered array
       setFilteredMembers(filtered);
     }
   };

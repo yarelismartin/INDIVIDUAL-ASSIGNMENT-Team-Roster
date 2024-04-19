@@ -16,6 +16,7 @@ const deleteTeamAndMembers = async (teamFirebasekey) => {
     }).catch((error) => reject(error));
 });
  */
+
 const viewTeamDetails = async (teamFirebasekey) => {
   const team = await getSingleTeam(teamFirebasekey);
   const teamMembers = await getTeamMembers(teamFirebasekey);
