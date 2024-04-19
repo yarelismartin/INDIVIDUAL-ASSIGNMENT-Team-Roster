@@ -23,12 +23,12 @@ export default function MemberCards({ memObj, onUpdate }) {
   const { user } = useAuth();
 
   // Function to get the team name asynchronously
-  const getTeamName = async (teamId) => {
+  const getTeamName = async () => {
     // Fetch teams based on user's UID
     const teams = await getTeams(user.uid);
 
     // Find the team with the matching ID
-    const foundTeam = teams.find((team) => team.firebaseKey === teamId);
+    const foundTeam = teams.find((team) => team.firebaseKey === memObj.team_id);
 
     // Return the team name if found, otherwise return a default value
     return foundTeam ? foundTeam.team_name : 'Team Not Found';
@@ -37,7 +37,7 @@ export default function MemberCards({ memObj, onUpdate }) {
   // Effect to fetch and update team name value when memObj.team_id changes
   useEffect(() => {
     // Call the teamName function to get the team name asynchronously
-    getTeamName(memObj.team_id).then((result) => {
+    getTeamName().then((result) => {
       // Set the teamNameValue state with the fetched team name
       setTeamNameValue(result);
     });
