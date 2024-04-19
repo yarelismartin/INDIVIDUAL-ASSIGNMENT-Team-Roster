@@ -36,7 +36,7 @@ function MemberForm({ memObj }) {
   };
   /* we need name and value to get the { key: value}
   we then set the form with the new changes made along with the prev
-  values. name is wrapped in square bracket so that we are able to get key: value */
+  values. name is wrapped in square bracket so that we are able to update it */
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -46,9 +46,7 @@ function MemberForm({ memObj }) {
       const payload = { ...formInput, uid: user.uid };
       createMember(payload).then(({ name }) => {
         const patchPayload = { firebaseKey: name };
-        updateMember(patchPayload).then(() => {
-          router.push('/');
-        });
+        updateMember(patchPayload).then(() => router.push('/'));
       });
     }
   };
@@ -58,45 +56,47 @@ for create  we create a payload based on the forminputs to then pass to
 our api call. and make the patchpayload for the firebased then reroute the user */
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <h2>{memObj.firebaseKey ? 'Update' : 'Create'} Memeber</h2>
+    <div>
+      <Form onSubmit={handleSubmit}>
+        <h2>{memObj.firebaseKey ? 'Update' : 'Create'} Memeber</h2>
 
-      {/* TITLE INPUT  */}
-      <Form.Group className="mb-3">
-        <Form.Label>Name</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Player's Name..."
-          name="name"
-          value={formInput.name}
-          onChange={handleChange}
-          required
-        />
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>Position</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Player's Position..."
-          name="position"
-          value={formInput.position}
-          onChange={handleChange}
-          required
-        />
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>Image</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Eneter a image address of player"
-          name="image"
-          value={formInput.image}
-          onChange={handleChange}
-          required
-        />
-      </Form.Group>
-      <Button type="submit">{memObj.firebaseKey ? 'Update' : 'Create'} Memeber</Button>
-    </Form>
+        {/* TITLE INPUT  */}
+        <Form.Group className="mb-3">
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Player's Name..."
+            name="name"
+            value={formInput.name}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Position</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Player's Position..."
+            name="position"
+            value={formInput.position}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Image</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Eneter a image address of player"
+            name="image"
+            value={formInput.image}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+        <Button type="submit">{memObj.firebaseKey ? 'Update' : 'Create'} Memeber</Button>
+      </Form>
+    </div>
   );
 }
 
