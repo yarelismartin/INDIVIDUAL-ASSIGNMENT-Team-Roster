@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../utils/context/authContext';
 import { createMember, updateMember } from '../../api/memberData';
+import { getTeams } from '../../api/teamData';
 
 // with forms we need an inital value because when used to update and create each prop isn't required so the initial will be the default prop
 const initialValue = {
@@ -20,12 +21,8 @@ const initialValue = {
 function MemberForm({ memObj }) {
   const [formInput, setFormInput] = useState(initialValue);
   const { user } = useAuth();
+  const [selectTeam, setSelectTeam] = useState([]);
   const router = useRouter();
-
-  useEffect(() => {
-    if (memObj.firebaseKey) setFormInput(memObj);
-  }, [memObj, user]);
-  /* these dependencies are needed so it only runs if these are present */
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -41,12 +38,12 @@ function MemberForm({ memObj }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (memObj.firebaseKey) {
-      updateMember(formInput).then(() => router.push('/'));
+      updateMember(formInput).then(() => router.push('/members'));
     } else {
       const payload = { ...formInput, uid: user.uid };
       createMember(payload).then(({ name }) => {
         const patchPayload = { firebaseKey: name };
-        updateMember(patchPayload).then(() => router.push('/'));
+        updateMember(patchPayload).then(() => router.push('/members'));
       });
     }
   };
@@ -55,6 +52,12 @@ for update we call the api and pass it the forminput then re-route the user.
 for create  we create a payload based on the forminputs to then pass to
 our api call. and make the patchpayload for the firebased then reroute the user */
 
+  useEffect(() => {
+    getTeams(user.uid).then(setSelectTeam);
+    if (memObj.firebaseKey) setFormInput(memObj);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [memObj, user]);
+  /* these dependencies are needed so it only runs if these are present */
   return (
     <div>
       <Form onSubmit={handleSubmit}>
@@ -94,7 +97,25 @@ our api call. and make the patchpayload for the firebased then reroute the user 
             required
           />
         </Form.Group>
-        <Button type="submit">{memObj.firebaseKey ? 'Update' : 'Create'} Memeber</Button>
+        {/* <SelectTeam /> */}
+        <Form.Label>Team</Form.Label>
+        <Form.Select
+          name="team_id"
+          value={formInput.team_id}
+          onChange={handleChange}
+          required="true"
+        >
+          <option value="" hidden>Select a Team</option>
+          {selectTeam.map((team) => (
+            <option
+              key={team.firebaseKey}
+              value={team.firebaseKey}
+            >{team.team_name}
+            </option>
+          ))}
+
+        </Form.Select>
+        <Button style={{ marginTop: '15px' }} type="submit">{memObj.firebaseKey ? 'Update' : 'Create'} Memeber</Button>
       </Form>
     </div>
   );
