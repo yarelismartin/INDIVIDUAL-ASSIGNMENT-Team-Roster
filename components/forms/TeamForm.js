@@ -69,6 +69,21 @@ export default function TeamForm({ teamObj }) {
             required
           />
         </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+          <Form.Check
+            className="text-white mt-5"
+            type="switch"
+            label="Do you want to make this team public?"
+            name="is_public"
+            checked={input.is_public}
+            onChange={(e) => {
+              setInput((prevState) => ({
+                ...prevState,
+                is_public: e.target.checked,
+              }));
+            }}
+          />
+        </Form.Group>
         <Button variant="primary" type="submit">{teamObj.firebaseKey ? 'Update' : 'Create'} Team</Button>
       </Form>
     </div>

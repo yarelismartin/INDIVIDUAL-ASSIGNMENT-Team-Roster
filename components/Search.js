@@ -19,8 +19,8 @@ export default function Search({ onKeyUp }) {
   we are taking that value and making sure it is lowecased  */
 
   return (
-    <div>
-      <Form className="d-flex">
+    <div style={{ margin: '0 auto', maxWidth: '400px' }}>
+      <Form className="d-flex" style={{ marginTop: '30px', marginBottom: '20px' }}>
         <Form.Control
           type="search"
           placeholder="Search"
@@ -28,9 +28,9 @@ export default function Search({ onKeyUp }) {
           onChange={handleChange}
           className="me-2"
           aria-label="Search"
-          /* value={query} */
+          style={{ width: '100%' }}
         />
-        <Button variant="outline-success">Search</Button>
+        <Button variant="primary">Search</Button>
       </Form>
     </div>
   );
