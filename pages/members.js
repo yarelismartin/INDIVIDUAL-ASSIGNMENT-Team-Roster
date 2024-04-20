@@ -56,7 +56,6 @@ function Members() {
         {filteredMembers.map((member) => (
           <MemberCards key={member.firebaseKey} memObj={member} onUpdate={getAllMembers} />
         ))}
-
       </div>
     </>
   );
