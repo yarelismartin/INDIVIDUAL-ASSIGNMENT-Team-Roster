@@ -4,7 +4,6 @@ import { deleteSingleTeam, getSingleTeam, getTeamMembers } from './teamData';
 const deleteTeamAndMembers = async (teamFirebasekey) => {
   const teamMembers = await getTeamMembers(teamFirebasekey);
   const deleteMembersPromise = await teamMembers.map((member) => deleteSingleMember(member.firebaseKey));
-  console.warn(teamMembers, deleteMembersPromise);
 
   await Promise.all(deleteMembersPromise).then(() => deleteSingleTeam(teamFirebasekey));
 };

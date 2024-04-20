@@ -11,7 +11,6 @@ export default function TeamDetails({ teamObj, onUpdate }) {
   const deleteAllMembersAndTeam = () => {
     if (window.confirm(`If you delete ${teamObj.team_name} you will also delete all the players in this team. `)) {
       deleteTeamAndMembers(teamObj.firebaseKey).then(onUpdate);
-      console.warn(teamObj.firebaseKey);
     }
   };
   return (
