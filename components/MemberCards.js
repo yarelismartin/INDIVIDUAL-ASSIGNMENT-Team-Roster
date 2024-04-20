@@ -58,20 +58,28 @@ export default function MemberCards({ memObj, onUpdate }) {
         <Card.Img variant="top" src={memObj.image} style={{ objectFit: 'cover', height: '200px' }} />
         <Card.Body className="d-flex flex-column flex-md-row justify-content-between align-items-center">
           <div className="text-center w-100" style={{ marginBottom: '25px' }}>
-            <Card.Title style={{ fontSize: 'inherit', fontWeight: 400, margin: 5 }}> Team: {teamNameValue}</Card.Title>
+            {memObj.uid === user.uid && (
+            <><Card.Title style={{ fontSize: 'inherit', fontWeight: 400, margin: 5 }}> Team: {teamNameValue}</Card.Title>
+            </>
+            )}
             <Card.Title style={{ fontSize: 'inherit', fontWeight: 400, margin: 5 }}>Position: {memObj.position}</Card.Title>
           </div>
           <div className="d-flex flex-column align-items-center ml-auto">
-            <Link href={`/member/edit/${memObj.firebaseKey}`} passHref>
-              <Button style={{
-                backgroundColor: '#90a955', border: 'none', width: '100%', marginBottom: '5px', marginRight: '0',
-              }}
-              >✏️
+            {memObj.uid === user.uid && (
+            <>
+              <Link href={`/member/edit/${memObj.firebaseKey}`} passHref>
+                <Button style={{
+                  backgroundColor: '#90a955', border: 'none', width: '100%', marginBottom: '5px', marginRight: '0',
+                }}
+                >✏️
+                </Button>
+              </Link>
+              <Button style={{ backgroundColor: '#ef5d60', border: 'none', width: '100%' }} className="m-2" onClick={deleteMember}>
+                🗑️
               </Button>
-            </Link>
-            <Button style={{ backgroundColor: '#ef5d60', border: 'none', width: '100%' }} className="m-2" onClick={deleteMember}>
-              🗑️
-            </Button>
+            </>
+            )}
+
           </div>
         </Card.Body>
       </Card>
@@ -86,6 +94,7 @@ MemberCards.propTypes = {
     image: PropTypes.string,
     team_id: PropTypes.string,
     firebaseKey: PropTypes.string,
+    uid: PropTypes.string,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
