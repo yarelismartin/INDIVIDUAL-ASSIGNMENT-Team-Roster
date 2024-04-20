@@ -46,20 +46,41 @@ export default function MemberCards({ memObj, onUpdate }) {
   }, [memObj.team_id]);
 
   return (
-    <div>
-      <Card border="warning" style={{ width: '18rem' }}>
-        <Card.Header className="fw-semibold fs-4">{memObj.name}</Card.Header>
+    <div style={{ marginBottom: '25px' }}>
+      <div
+        style={{
+          backgroundColor: '#f8f9fa', padding: '3px', marginBottom: '0.5rem', borderRadius: '10px',
+        }}
+      >
+        <div className="fw-semibold fs-4 text-center mb-3" style={{ marginTop: '5px' }}>{memObj.name}</div>
+      </div>
+      <Card style={{ width: '18rem', borderRadius: '10px' }}>
         <Card.Img variant="top" src={memObj.image} style={{ objectFit: 'cover', height: '200px' }} />
-        <Card.Body>
-          <Card.Title style={{ fontSize: 'inherit', fontWeight: 400 }}> Team: {teamNameValue}</Card.Title>
-          <Card.Title style={{ fontSize: 'inherit', fontWeight: 400 }}>Position: {memObj.position}</Card.Title>
-          <Link href={`/member/edit/${memObj.firebaseKey}`} passHref>
-            <Button style={{ backgroundColor: '#90a955', border: 'none' }}>✏️</Button>
-          </Link>
-          <Button style={{ backgroundColor: '#ef5d60', border: 'none' }} className="m-2" onClick={deleteMember}>
-            🗑️
-          </Button>
+        <Card.Body className="d-flex flex-column flex-md-row justify-content-between align-items-center">
+          <div className="text-center w-100" style={{ marginBottom: '25px' }}>
+            {memObj.uid === user.uid && (
+            <><Card.Title style={{ fontSize: 'inherit', fontWeight: 400, margin: 5 }}> Team: {teamNameValue}</Card.Title>
+            </>
+            )}
+            <Card.Title style={{ fontSize: 'inherit', fontWeight: 400, margin: 5 }}>Position: {memObj.position}</Card.Title>
+          </div>
+          <div className="d-flex flex-column align-items-center ml-auto">
+            {memObj.uid === user.uid && (
+            <>
+              <Link href={`/member/edit/${memObj.firebaseKey}`} passHref>
+                <Button style={{
+                  backgroundColor: '#90a955', border: 'none', width: '100%', marginBottom: '5px', marginRight: '0',
+                }}
+                >✏️
+                </Button>
+              </Link>
+              <Button style={{ backgroundColor: '#ef5d60', border: 'none', width: '100%' }} className="m-2" onClick={deleteMember}>
+                🗑️
+              </Button>
+            </>
+            )}
 
+          </div>
         </Card.Body>
       </Card>
     </div>
@@ -73,6 +94,7 @@ MemberCards.propTypes = {
     image: PropTypes.string,
     team_id: PropTypes.string,
     firebaseKey: PropTypes.string,
+    uid: PropTypes.string,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };

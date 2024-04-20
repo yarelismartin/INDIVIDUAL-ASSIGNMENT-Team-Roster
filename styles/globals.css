@@ -18,8 +18,8 @@ a {
 }
 
 body {
-  background-color: #88effd;
-}
+  background-color: #86836D;}
+
 
 .logo {
   transition: transform 0.2s;
@@ -27,4 +27,28 @@ body {
 
 .logo:hover {
   transform: scale(1.1);
+}
+
+.status-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 1.5em;
+  visibility: hidden;
+}
+
+.logo:hover + .status-icon {
+  visibility: visible;
+}
+
+.status-icon:before {
+  content: attr(data-icon); /* Display the emoji from data-icon attribute */
+}
+
+.public:before {
+  content: "🌐"; /* Public emoji */
+}
+
+.private:before {
+  content: "🔒"; /* Private emoji */
 }

@@ -17,6 +17,7 @@ function Members() {
     // Set both all members and filtered members to the fetched members
     setMembers(fetchedMembers);
     setFilteredMembers(fetchedMembers);
+    console.warn(user);
   };
 
   // useEffect hook to fetch all members when the component mounts

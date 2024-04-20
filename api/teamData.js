@@ -82,6 +82,26 @@ const getTeamMembers = (firebaseKey) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getAllPublicTeams = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/teams.json`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data) {
+        const allTeams = Object.values(data);
+        const filteredTeams = allTeams.filter((team) => team.uid === uid || team.is_public);
+        resolve(filteredTeams);
+      } else {
+        resolve([]);
+      }
+    })
+    .catch(reject);
+});
+
 export {
   getTeams,
   createTeam,
@@ -89,4 +109,5 @@ export {
   deleteSingleTeam,
   updateTeam,
   getTeamMembers,
+  getAllPublicTeams,
 };

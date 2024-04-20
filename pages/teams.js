@@ -1,32 +1,49 @@
 import React, { useEffect, useState } from 'react';
-import { getTeams } from '../api/teamData';
+import { getAllPublicTeams } from '../api/teamData';
 import TeamCards from '../components/TeamCards';
 import { useAuth } from '../utils/context/authContext';
 
 export default function Teams() {
-  const [teams, setTeams] = useState([]);
+  const [userTeams, setUserTeams] = useState([]);
+  const [publicTeams, setPublicTeams] = useState([]);
   const { user } = useAuth();
 
-  const getAllTeams = () => {
-    getTeams(user.uid).then(setTeams);
+  const getPublicTeams = async () => {
+    const allTeams = await getAllPublicTeams(user.uid);
+    const allUserTeams = allTeams.filter((team) => team.uid === user.uid);
+    setUserTeams(allUserTeams);
+    const publicUser = allTeams.filter((team) => team.uid !== user.uid && team.is_public);
+    setPublicTeams(publicUser);
   };
 
   useEffect(() => {
-    getAllTeams();
+    getPublicTeams();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div
-      className="text-center d-flex flex-wrap justify-content-center align-content-center"
-      style={{
-        gap: '40px',
-        marginTop: '40px',
-      }}
-    >
-      {teams.map((team) => (
-        <TeamCards key={team.firebaseKey} teamObj={team} />
-      ))}
+    <div className="text-center">
+      {userTeams.length > 0 && (
+        <>
+          <h2 style={{ marginTop: '40px' }}>Your Teams</h2>
+          <div className="d-flex flex-wrap justify-content-center align-content-center" style={{ gap: '40px', marginTop: '20px' }}>
+            {userTeams.map((team) => (
+              <TeamCards key={team.firebaseKey} teamObj={team} />
+            ))}
+          </div>
+        </>
+      )}
+
+      {publicTeams.length > 0 && (
+      <>
+        <h2 style={{ marginTop: '70px' }}>Public Teams</h2>
+        <div className="d-flex flex-wrap justify-content-center align-content-center" style={{ gap: '40px', marginTop: '20px' }}>
+          {publicTeams.map((team) => (
+            <TeamCards key={team.firebaseKey} teamObj={team} />
+          ))}
+        </div>
+      </>
+      )}
     </div>
   );
 }
