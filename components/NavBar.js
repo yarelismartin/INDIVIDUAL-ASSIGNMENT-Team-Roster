@@ -10,6 +10,7 @@ export default function NavBar() {
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
+
         <Link passHref href="/">
           <Navbar.Brand>Rugby Roster Pro</Navbar.Brand>
         </Link>
@@ -23,16 +24,14 @@ export default function NavBar() {
             <Link passHref href="/members">
               <Nav.Link>Members</Nav.Link>
             </Link>
-            <Link passHref href="/member/new">
-              <Nav.Link>Add a Member</Nav.Link>
-            </Link>
             <Link passHref href="/teams">
               <Nav.Link>Teams</Nav.Link>
             </Link>
-            <Link passHref href="/team/new">
-              <Nav.Link>Add a Team</Nav.Link>
-            </Link>
-            <Button variant="danger" onClick={signOut}>Sign Out</Button>
+          </Nav>
+          <Nav>
+            <div className="ml-auto">
+              <Button variant="danger" onClick={signOut}>Sign Out</Button>
+            </div>
           </Nav>
         </Navbar.Collapse>
       </Container>

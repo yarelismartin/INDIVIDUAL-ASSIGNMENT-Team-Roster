@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
+import Link from 'next/link';
 import MemberCards from '../components/MemberCards';
 import { getMembers } from '../api/memberData';
 import { useAuth } from '../utils/context/authContext';
@@ -43,8 +45,17 @@ function Members() {
   };
 
   return (
-    <>
+    <div className="text-center">
       {/* pass search the filteritems in order to filter our keyup value */}
+      <Link href="/member/new" passHref>
+        <Button
+          className="text-center info"
+          style={{
+            marginTop: '15px', backgroundColor: '#B6A39E', color: 'black', border: 'none',
+          }}
+        > Add A Member
+        </Button>
+      </Link>
       <Search onKeyUp={filterItems} />
       <div
         className="text-center d-flex flex-wrap justify-content-center align-content-center"
@@ -52,12 +63,13 @@ function Members() {
           gap: '20px',
         }}
       >
+
         {/* we are mapping through filterdMembers in order for our players to be updated based on latest query. we use this instead of members because all members will be rended is !query is found */}
         {filteredMembers.map((member) => (
           <MemberCards key={member.firebaseKey} memObj={member} onUpdate={getAllMembers} />
         ))}
       </div>
-    </>
+    </div>
   );
 }
 
