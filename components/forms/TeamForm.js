@@ -33,7 +33,7 @@ export default function TeamForm({ teamObj }) {
     if (teamObj.firebaseKey) {
       updateTeam(input).then(() => router.push(`/team/${teamObj.firebaseKey}`));
     } else {
-      const payload = { ...input, uid: user.uid };
+      const payload = { ...input, uid: user.uid, creator: user.displayName };
       createTeam(payload).then(({ name }) => {
         const patchPayload = { firebaseKey: name };
         updateTeam(patchPayload).then(() => router.push('/teams'));

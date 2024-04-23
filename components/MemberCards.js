@@ -3,8 +3,9 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { deleteSingleMember } from '../api/memberData';
-import { getTeams } from '../api/teamData';
+import { getAllPublicTeams } from '../api/teamData';
 import { useAuth } from '../utils/context/authContext';
 
 export default function MemberCards({ memObj, onUpdate }) {
@@ -21,11 +22,14 @@ export default function MemberCards({ memObj, onUpdate }) {
   // State to hold the team name value
   const [teamNameValue, setTeamNameValue] = useState(null);
   const { user } = useAuth();
+  const router = useRouter();
+
+  const isTeamDetailRoute = router.pathname.startsWith('/team/');
 
   // Function to get the team name asynchronously
   const getTeamName = async () => {
-    // Fetch teams based on user's UID
-    const teams = await getTeams(user.uid);
+    // usinf get all public so team name shows up on memebr card when viewing other users team detail page
+    const teams = await getAllPublicTeams(user.uid);
 
     // Find the team with the matching ID
     const foundTeam = teams.find((team) => team.firebaseKey === memObj.team_id);
@@ -58,10 +62,19 @@ export default function MemberCards({ memObj, onUpdate }) {
         <Card.Img variant="top" src={memObj.image} style={{ objectFit: 'cover', height: '200px' }} />
         <Card.Body className="d-flex flex-column flex-md-row justify-content-between align-items-center">
           <div className="text-center w-100" style={{ marginBottom: '25px' }}>
-            {memObj.uid === user.uid && (
-            <><Card.Title style={{ fontSize: 'inherit', fontWeight: 400, margin: 5 }}> Team: {teamNameValue}</Card.Title>
-            </>
-            )}
+
+            <Link href={`/team/${memObj.team_id}`} passHref>
+              <Card.Title
+                style={{
+                  fontSize: 'inherit',
+                  fontWeight: 400,
+                  margin: 5,
+                }}
+                className={isTeamDetailRoute ? '' : 'link-style'}
+              > Team: {teamNameValue}
+              </Card.Title>
+            </Link>
+
             <Card.Title style={{ fontSize: 'inherit', fontWeight: 400, margin: 5 }}>Position: {memObj.position}</Card.Title>
           </div>
           <div className="d-flex flex-column align-items-center ml-auto">

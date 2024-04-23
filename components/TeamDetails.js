@@ -34,7 +34,7 @@ export default function TeamDetails({ teamObj, onUpdate }) {
       <div className="card-body" style={{ flex: '2' }}>
         <h5>{teamObj.is_public ? '🌐' : '🔒'}</h5>
         <h5 className="card-title"> {teamObj.team_name} </h5>
-        <h6>Created By: {user.displayName}</h6>
+        <h6>Created By: {teamObj.creator}</h6>
         {teamObj.uid === user.uid && (
           <>
             <Link href={`/team/edit/${teamObj.firebaseKey}`} passHref>
@@ -56,6 +56,7 @@ TeamDetails.propTypes = {
     firebaseKey: PropTypes.string,
     is_public: PropTypes.bool,
     uid: PropTypes.string,
+    creator: PropTypes.string,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };

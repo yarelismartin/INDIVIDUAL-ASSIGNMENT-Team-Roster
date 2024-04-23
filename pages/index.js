@@ -9,7 +9,7 @@ export default function Home() {
     }}
     >
       <div style={{ textAlign: 'center' }}>
-        <h1>{`Welcome to Rugby Roster Pro ${user.displayName}!`}</h1>
+        <h1>{`Welcome to Rugby Roster Pro, ${user.displayName}!`}</h1>
         <p>Get started by creating a team.</p>
       </div>
     </div>

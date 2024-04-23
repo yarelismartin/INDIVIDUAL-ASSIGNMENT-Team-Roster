@@ -52,3 +52,12 @@ body {
 .private:before {
   content: "🔒"; /* Private emoji */
 }
+
+.link-style {
+  cursor: pointer;
+}
+
+.link-style:hover {
+  text-decoration: underline;
+  color: #0000FF;
+}
